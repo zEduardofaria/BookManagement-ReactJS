@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import $ from 'jquery';
 import PubSub from 'pubsub-js'
+import TratadorErros from './TratadorErros';
 
 import Input from './componentes/Input';
 
@@ -22,15 +23,21 @@ class Form extends Component {
           dataType: 'json',
           type: 'post',
           data: JSON.stringify({ 
-            nome: nome, 
-            email: email, 
-            senha: senha 
+            nome, 
+            email, 
+            senha 
           }),
           success: (novaListagem) => {
             PubSub.publish('atualiza-lista-autores', novaListagem);
+            this.setState({ nome: '', email: '', senha: '' })
           },
           error: (resposta) => {
-            console.log("erro", resposta);
+              if (resposta.status === 400) {
+                  new TratadorErros().publicaErros(resposta.responseJSON)
+              }
+          },
+          beforeSend: function() {
+              PubSub.publish('limpa-erros', {});
           }
         })
     }
@@ -127,8 +134,13 @@ export default class AutorBox extends Component {
     render() {
         return (
             <Fragment>
+              <div className="header">
+                <h1>Cadastro de autor</h1>
+              </div>
+              <div className="content" id="content">
                 <Form />
                 <Table lista={this.state.lista} />
+              </div>
             </Fragment>
         );
     }
