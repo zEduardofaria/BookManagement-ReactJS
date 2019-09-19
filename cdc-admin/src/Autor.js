@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import $ from 'jquery';
+import PubSub from 'pubsub-js'
 
 import Input from './componentes/Input';
 
@@ -25,8 +26,8 @@ class Form extends Component {
             email: email, 
             senha: senha 
           }),
-          success: (lista) => {
-            this.props.callbackAtualizaListagem(lista)
+          success: (novaListagem) => {
+            PubSub.publish('atualiza-lista-autores', novaListagem);
           },
           error: (resposta) => {
             console.log("erro", resposta);
@@ -104,7 +105,7 @@ export default class AutorBox extends Component {
         this.state = { lista: [] };
     }
     
-    componentWillMount() {
+    componentDidMount() {
       $.ajax({
         url: 'http://cdc-react.herokuapp.com/api/autores',
         dataType: 'json',
@@ -117,16 +118,16 @@ export default class AutorBox extends Component {
           });
         }
       })
-    }
 
-    atualizaListagem = (lista) => {
-        this.setState({ lista })
+      PubSub.subscribe('atualiza-lista-autores', (topico, lista) => {
+        this.setState({ lista });
+      })
     }
 
     render() {
         return (
             <Fragment>
-                <Form callbackAtualizaListagem={this.atualizaListagem} />
+                <Form />
                 <Table lista={this.state.lista} />
             </Fragment>
         );
