@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Input extends Component {
 
     render() {
-        const { id, type, name, value, value, onChange, label } = this.props
+        const { id, type, name, value, onChange, label } = this.props
 
         return (
             <div className="pure-control-group">
