@@ -18,7 +18,7 @@ A step by step series of examples that tell you how to get a development env run
 
 ```bash
 git clone https://github.com/zEduardofaria/BookManagement-ReactJS.git
-cd cdc-admin
+cd BookManagement-ReactJS/cdc-admin
 npm install
 npm start
 ```
