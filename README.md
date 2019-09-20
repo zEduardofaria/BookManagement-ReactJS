@@ -3,7 +3,7 @@ Project to train ReactJS's old version concepts in practice
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. This project didn't have the purpose of be pretty. I just tested some React old versions in practice.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. This project didn't have the purpose of be pretty. I just tested some React's old versions in practice.
 
 ### Prerequisites
 
